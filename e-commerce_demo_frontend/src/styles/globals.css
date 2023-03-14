@@ -82,7 +82,7 @@ a {
 }
 .cart-item-qty{
   position: absolute;
-  right: -8px;
+  right: -7px;
   font-size: 12px;
   color: #eee;
   background-color: #f02d34;
@@ -91,6 +91,7 @@ a {
   border-radius: 50%;
   text-align: center;
   font-weight: 600;
+  padding-top: 1px;
 
 }
 .products-container{
