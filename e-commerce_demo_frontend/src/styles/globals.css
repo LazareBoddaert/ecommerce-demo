@@ -493,7 +493,7 @@ a {
   transition: transform 0.5s ease;
 }
 .buttons .add-to-cart:hover{
-  transform:scale(1.1,1.1)
+  transform:scale(1.1,1.1);
 }
 .buttons .buy-now{
   width: 200px;
@@ -510,11 +510,11 @@ a {
   transition: transform 0.5s ease;
 }
 .buttons .buy-now:hover{
-  transform:scale(1.1,1.1)
+  transform:scale(1.1,1.1);
 }
 .quantity-desc{
   border: 1px solid gray;
-  padding: 6px;
+  padding: 5px;
 }
 .quantity-desc span{
   font-size: 16px;
@@ -522,6 +522,7 @@ a {
   cursor: pointer;
 }
 .quantity-desc .minus{
+  padding-top: 10px;
   border-right: 1px solid gray;
   color: #f02d34;
 }
