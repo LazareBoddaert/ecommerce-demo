@@ -2,11 +2,40 @@ import React, { useState } from 'react';
 import { client, urlFor } from '../../lib/client';
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { Product } from '@component/components';
+import { useModal } from '../../context/modal-context';
+
 
 
 const ProductDetails = ({ product, otherProducts }) => {
-  const { image, name, details, price } = product;
+  const { image, name, details, price, _id } = product;
   const [index, setIndex] = useState(0);
+  const { setModal } = useModal();
+  const [comment, setComment] = useState('');
+  const [userName, setUserName] = useState('');
+  const [rate, setRate] = useState(null);
+  const [addingComment, setAddingComment] = useState(false);
+
+
+  const addComment = () => {
+    if (comment) {
+      setAddingComment(true);
+
+      client.patch(_id)
+        .setIfMissing({ comments: [] })
+        .insert('after', 'comments[-1]', [{
+          comment,
+          _key: uuidv4(),
+        }])
+        .commit()
+        .then(() => {
+          setUserName('');
+          setRate('');
+          setComment('');
+          setAddingComment(false);
+        })
+    }
+  }
+
 
   return (
     <div>
@@ -63,6 +92,78 @@ const ProductDetails = ({ product, otherProducts }) => {
             >
               Buy Now
             </button>
+          </div>
+        </div>
+        <div className='comments-container'>
+          <div className='comments'>
+            <h2>Customer reviews:</h2>
+            {product.comments?.map((item) => (
+              <div className="all-comments" key={item.comment}>
+                <div className='comment-user-rate'>
+                  <span className="comment-user">{item.userName}</span>
+                  <span className="comment-rate">{item.rate}/5</span>
+                </div>
+                <p className="comment-content">{item.comment}</p>
+              </div>
+            ))}
+            <label
+              className="App-link"
+              onClick={() => {
+                setModal(
+                  <>
+                    <h3>Your review</h3>
+                    <form method="post" className="">
+                      <div className="">
+                        <input
+                          type="text"
+                          name="userName"
+                          id="userName"
+                          placeholder='Your name'
+                          value={userName}
+                          onChange={(e) => setUserName(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="">
+                        <input
+                          type="number"
+                          name="rate"
+                          id="rate"
+                          placeholder='Your rate'
+                          min="0"
+                          max="5"
+                          value={rate}
+                          onChange={(e) => setRate(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="">
+                        <textarea
+                          id="newComment"
+                          name="newComment"
+                          rows="5"
+                          cols="33"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                          placeholder='Tell us about this product'
+                        />
+                      </div>
+                      <div className="buttons">
+                        <button
+                          type='submit'
+                          className=''
+                          onClick={addComment}
+                        >
+                          {addingComment ? 'Posting...' : 'Post'}
+                        </button>
+                      </div>
+                    </form>
+                  </>
+                )
+              }}
+            >
+              Add a review
+            </label>
           </div>
         </div>
       </div>
