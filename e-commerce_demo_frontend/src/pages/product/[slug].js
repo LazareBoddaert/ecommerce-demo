@@ -1,41 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { client, urlFor } from '../../lib/client';
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { Product } from '@component/components';
 import { useModal } from '../../context/modal-context';
-
+import { v4 as uuidv4 } from 'uuid';
 
 
 const ProductDetails = ({ product, otherProducts }) => {
-  const { image, name, details, price, _id } = product;
+  const { image, name, details, price } = product;
   const [index, setIndex] = useState(0);
   const { setModal } = useModal();
-  const [comment, setComment] = useState('');
-  const [userName, setUserName] = useState('');
-  const [rate, setRate] = useState(null);
+  // const [comment, setComment] = useState('');
+  // const [userName, setUserName] = useState('');
+  // const [rate, setRate] = useState(null);
   const [addingComment, setAddingComment] = useState(false);
-
+  const inputUserName = useRef(null);
+  const inputRate = useRef(null);
+  const inputComment = useRef(null);
 
   const addComment = () => {
-    if (comment) {
-      setAddingComment(true);
 
-      client.patch(_id)
-        .setIfMissing({ comments: [] })
-        .insert('after', 'comments[-1]', [{
-          comment,
-          _key: uuidv4(),
-        }])
-        .commit()
-        .then(() => {
-          setUserName('');
-          setRate('');
-          setComment('');
-          setAddingComment(false);
-        })
-    }
+    setAddingComment(true);
+
+    client.patch(product._id)
+      .setIfMissing({ comments: [] })
+      .insert('after', 'comments[-1]', [{
+        userName: inputUserName.current.value,
+        rate: parseInt(inputRate.current.value),
+        comment: inputComment.current.value,
+        _key: uuidv4(),
+      }])
+      .commit()
+      .then(() => {
+        setAddingComment(false);
+        window.location.reload(false);
+      })
   }
 
+  let allRates = 0;
+  for (let i = 0; i < product.comments.length; i++) {
+    allRates += product.comments[i].rate
+  }
+  let averageRate = allRates / product.comments.length;
+  console.log(averageRate)
 
   return (
     <div>
@@ -64,7 +71,7 @@ const ProductDetails = ({ product, otherProducts }) => {
               <AiFillStar />
               <AiOutlineStar />
             </div>
-            <p>(20)</p>
+            <p>({product.comments.length})</p>
           </div>
           <h4>Details: </h4>
           <p>{details}</p>
@@ -112,15 +119,14 @@ const ProductDetails = ({ product, otherProducts }) => {
                 setModal(
                   <>
                     <h3>Your review</h3>
-                    <form method="post" className="">
+                    <form method="get" className="">
                       <div className="">
                         <input
                           type="text"
                           name="userName"
                           id="userName"
                           placeholder='Your name'
-                          value={userName}
-                          onChange={(e) => setUserName(e.target.value)}
+                          ref={inputUserName}
                           required
                         />
                       </div>
@@ -132,8 +138,7 @@ const ProductDetails = ({ product, otherProducts }) => {
                           placeholder='Your rate'
                           min="0"
                           max="5"
-                          value={rate}
-                          onChange={(e) => setRate(e.target.value)}
+                          ref={inputRate}
                           required
                         />
                       </div>
@@ -143,9 +148,8 @@ const ProductDetails = ({ product, otherProducts }) => {
                           name="newComment"
                           rows="5"
                           cols="33"
-                          value={comment}
-                          onChange={(e) => setComment(e.target.value)}
                           placeholder='Tell us about this product'
+                          ref={inputComment}
                         />
                       </div>
                       <div className="buttons">
