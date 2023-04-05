@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { client, urlFor } from '../../lib/client';
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { Product } from '@component/components';
+import { useStateContext } from '../../context/StateContext'
 import { useModal } from '../../context/modal-context';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,6 +11,7 @@ const ProductDetails = ({ product, otherProducts }) => {
   const { image, name, details, price } = product;
   const [index, setIndex] = useState(0);
   const { setModal } = useModal();
+  const { decQty, incQty, qty, onAdd } = useStateContext();
   // const [comment, setComment] = useState('');
   // const [userName, setUserName] = useState('');
   // const [rate, setRate] = useState(null);
@@ -38,10 +40,10 @@ const ProductDetails = ({ product, otherProducts }) => {
   }
 
   let allRates = 0;
-  for (let i = 0; i < product.comments.length; i++) {
+  for (let i = 0; i < product.comments?.length; i++) {
     allRates += product.comments[i].rate
   }
-  let averageRate = allRates / product.comments.length;
+  let averageRate = allRates / product.comments?.length;
   console.log(averageRate)
 
   return (
@@ -71,7 +73,7 @@ const ProductDetails = ({ product, otherProducts }) => {
               <AiFillStar />
               <AiOutlineStar />
             </div>
-            <p>({product.comments.length})</p>
+            <p>({product.comments?.length || 0})</p>
           </div>
           <h4>Details: </h4>
           <p>{details}</p>
@@ -79,16 +81,16 @@ const ProductDetails = ({ product, otherProducts }) => {
           <div className="quantity">
             <h3>Quantity: </h3>
             <p className='quantity-desc'>
-              <span className='minus' onClick=''><AiOutlineMinus /></span>
-              <span className='num' onClick=''>0</span>
-              <span className='plus' onClick=''><AiOutlinePlus /></span>
+              <span className='minus' onClick={decQty}><AiOutlineMinus /></span>
+              <span className='num'>{qty}</span>
+              <span className='plus' onClick={incQty}><AiOutlinePlus /></span>
             </p>
           </div>
           <div className="buttons">
             <button
               type='button'
               className='add-to-cart'
-              onClick=''
+              onClick={() => onAdd(product, qty)}
             >
               Add to Cart
             </button>
