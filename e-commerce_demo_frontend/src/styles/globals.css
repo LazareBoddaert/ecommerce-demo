@@ -463,6 +463,7 @@ a {
 .reviews p{
   color: #324d67;
   margin-top: 0px;
+  margin-bottom: 5px;
 }
 .product-detail-desc .price{
   font-weight: 700 ;

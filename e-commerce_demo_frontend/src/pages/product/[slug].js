@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { client, urlFor } from '../../lib/client';
-import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { Product } from '@component/components';
 import { useStateContext } from '../../context/StateContext'
 import { useModal } from '../../context/modal-context';
 import { v4 as uuidv4 } from 'uuid';
-
+import RatingStars from '@component/components/RatingStars';
 
 const ProductDetails = ({ product, otherProducts }) => {
   const { image, name, details, price } = product;
@@ -20,8 +20,8 @@ const ProductDetails = ({ product, otherProducts }) => {
   const inputRate = useRef(null);
   const inputComment = useRef(null);
 
-  const addComment = () => {
-
+  const addComment = (e) => {
+    e.preventDefault();
     setAddingComment(true);
 
     client.patch(product._id)
@@ -44,7 +44,7 @@ const ProductDetails = ({ product, otherProducts }) => {
     allRates += product.comments[i].rate
   }
   let averageRate = allRates / product.comments?.length;
-  console.log(averageRate)
+  // console.log(averageRate)
 
   return (
     <div>
@@ -56,6 +56,7 @@ const ProductDetails = ({ product, otherProducts }) => {
           <div className='small-images-container'>
             {image?.map((item, i) => (
               <img
+                key={`${item}-${i}`}
                 src={urlFor(item)}
                 className={i === index ? 'small-image selected-image' : 'small-image'}
                 onMouseEnter={() => setIndex(i)}
@@ -66,12 +67,8 @@ const ProductDetails = ({ product, otherProducts }) => {
         <div className='product-detail-desc'>
           <h1>{name}</h1>
           <div className="reviews">
-            <div>
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiOutlineStar />
+            <div className="product-rating-stars">
+              <RatingStars averageRate={averageRate} />
             </div>
             <p>({product.comments?.length || 0})</p>
           </div>
@@ -152,6 +149,7 @@ const ProductDetails = ({ product, otherProducts }) => {
                           cols="33"
                           placeholder='Tell us about this product'
                           ref={inputComment}
+                          required
                         />
                       </div>
                       <div className="buttons">
