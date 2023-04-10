@@ -840,3 +840,56 @@ a {
 #newComment {
   z-index:1000;
 }
+
+/* .stars-form {
+  font-size: 0;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+
+.stars-form * {
+  font-size: 1rem;
+}
+
+.stars-form > input {
+  display: none;
+}
+
+.stars-form > input + label {
+  display: inline-block;
+  overflow: hidden;
+  text-indent: 9999px;
+  width: 1em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.stars-form > input + label:before {
+  display: inline-block;
+  text-indent: -9999px;
+  content: "\2605";
+  color: #888;
+}
+
+.stars-form > input:checked ~ label:before, .stars-form > input + label:hover ~label:before, .stars-form > input + label:hover:before {
+  content: "\2605";
+  color: #e52;
+  text-shadow: 0 0 1px #333;
+}
+
+.stars-form > .star-clear + label {
+  text-indent: -9999px;
+  width: .5em;
+  margin-left: -.5em;
+}
+.stars-form > .star-clear + label:before {
+  content: "\2605";
+  color: #888;
+  text-shadow: none;
+}
+
+.stars-form:hover > input + label:hover ~label:before, .stars-form:hover > input + label:hover:before {
+  content: "\2605";
+  color: #e52;
+  text-shadow: 0 0 1px #333;
+} */

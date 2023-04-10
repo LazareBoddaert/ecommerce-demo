@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { client, urlFor } from '../../lib/client';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { Product } from '@component/components';
@@ -6,6 +6,7 @@ import { useStateContext } from '../../context/StateContext'
 import { useModal } from '../../context/modal-context';
 import { v4 as uuidv4 } from 'uuid';
 import RatingStars from '@component/components/RatingStars';
+
 
 const ProductDetails = ({ product, otherProducts }) => {
   const { image, name, details, price } = product;
@@ -20,8 +21,8 @@ const ProductDetails = ({ product, otherProducts }) => {
   const inputRate = useRef(null);
   const inputComment = useRef(null);
 
-  const addComment = (e) => {
-    e.preventDefault();
+
+  const addComment = () => {
     setAddingComment(true);
 
     client.patch(product._id)
@@ -38,6 +39,8 @@ const ProductDetails = ({ product, otherProducts }) => {
         window.location.reload(false);
       })
   }
+
+  useEffect
 
   let allRates = 0;
   for (let i = 0; i < product.comments?.length; i++) {
@@ -118,7 +121,7 @@ const ProductDetails = ({ product, otherProducts }) => {
                 setModal(
                   <>
                     <h3>Your review</h3>
-                    <form method="get" className="">
+                    <form method="get" className="" id="ratingsForm">
                       <div className="">
                         <input
                           type="text"
@@ -129,17 +132,9 @@ const ProductDetails = ({ product, otherProducts }) => {
                           required
                         />
                       </div>
-                      <div className="">
-                        <input
-                          type="number"
-                          name="rate"
-                          id="rate"
-                          placeholder='Your rate'
-                          min="0"
-                          max="5"
-                          ref={inputRate}
-                          required
-                        />
+                      <div className="stars-form">
+                        <input type="number" id="rating" name="rating" min='0' max='5' ref={inputRate} required />
+                        Your rate (0-5)
                       </div>
                       <div className="">
                         <textarea
