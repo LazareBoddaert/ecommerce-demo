@@ -145,7 +145,7 @@ a {
   font-size: 20px;
 }
 .hero-banner-container button{
-   border-radius: 15px;
+  border-radius: 15px;
   padding: 10px 16px;
   background-color: #f02d34;
   color: white;
@@ -546,11 +546,11 @@ a {
   max-width: 90%;
 }
 .all-comments {
-  border: 1px solid grey;
+  border: 1px solid whitesmoke;
   border-radius: 5px;
   margin: 10px 0px 10px 4px;
-  padding: 2px;
-  background-color: whitesmoke;
+  padding: 6px;
+  background-color: white;
   box-shadow: 2px 2px rgba(0, 0, 0, 0.3);
 }
 .comment-user-rate {
@@ -561,13 +561,40 @@ a {
   margin-bottom: 5px;
 }
 .comment-user {
-  /* border: 1px dotted red; */
+  color: #f02d34;
+  font-style: italic;
 }
 .comment-rate {
-  /* border: 1px dotted blue; */
+  color: #f02d34;
 }
 .comment-content {
-  /* border: 1px dotted green; */
+  margin-top: 6px;
+}
+.more-comments {
+  margin-left: 32px;
+  padding-bottom: 80px;
+}
+.modal-com {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal-comments {
+  width: 70%;
+  margin-bottom: 14px;
+}
+.modal-title-comments {
+  color: #324d67;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 12px;
+  margin-top: 100px;
+}
+
+.add-review p {
+  margin-top: 12px;
+  margin-left: 50px;
+  font-weight: bold;
 }
 
 .maylike-products-wrapper{

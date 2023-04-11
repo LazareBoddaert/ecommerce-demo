@@ -40,14 +40,11 @@ const ProductDetails = ({ product, otherProducts }) => {
       })
   }
 
-  useEffect
-
   let allRates = 0;
   for (let i = 0; i < product.comments?.length; i++) {
     allRates += product.comments[i].rate
   }
   let averageRate = allRates / product.comments?.length;
-  // console.log(averageRate)
 
   return (
     <div>
@@ -105,18 +102,46 @@ const ProductDetails = ({ product, otherProducts }) => {
         </div>
         <div className='comments-container'>
           <div className='comments'>
-            <h2>Customer reviews:</h2>
-            {product.comments?.map((item) => (
-              <div className="all-comments" key={item.comment}>
-                <div className='comment-user-rate'>
-                  <span className="comment-user">{item.userName}</span>
-                  <span className="comment-rate">{item.rate}/5</span>
-                </div>
-                <p className="comment-content">{item.comment}</p>
-              </div>
+            {product.comments ? <h2>Customer reviews:</h2> : <h2>No review for this product</h2>}
+            {product.comments?.map((item, i) => (
+              <>
+                {i < 5 &&
+                  <div className="all-comments" key={item.comment}>
+                    <div className='comment-user-rate'>
+                      <span className="comment-user">{item.userName}</span>
+                      <span className="comment-rate">{item.rate}/5</span>
+                    </div>
+                    <p className="comment-content">{item.comment}</p>
+                  </div>
+                }
+              </>
             ))}
+            {product.comments?.length > 5 &&
+              <label
+                className="more-comments App-link"
+                onClick={() => {
+                  setModal(
+                    <div className='modal-com'>
+                      <h3 className='modal-title-comments'>All reviews for this product:</h3>
+                      {product.comments?.map((item) => (
+                        <div className="modal-comments all-comments" key={item.comment}>
+                          <div className='comment-user-rate'>
+                            <span className="comment-user">{item.userName}</span>
+                            <span className="comment-rate">{item.rate}/5</span>
+                          </div>
+                          <p className="comment-content">{item.comment}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )
+                }}
+              >
+                Show all comments
+                <br />
+              </label>
+            }
             <label
-              className="App-link"
+              className="add-review App-link"
               onClick={() => {
                 setModal(
                   <>
@@ -161,7 +186,7 @@ const ProductDetails = ({ product, otherProducts }) => {
                 )
               }}
             >
-              Add a review
+              <p>Add a review</p>
             </label>
           </div>
         </div>
