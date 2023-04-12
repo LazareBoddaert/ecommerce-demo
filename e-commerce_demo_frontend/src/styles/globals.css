@@ -597,6 +597,49 @@ a {
   font-weight: bold;
 }
 
+.review-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.review-form-title {
+  color: #324d67;
+  margin-bottom: 16px;
+}
+.review-form-name {
+  margin-bottom: 8px;
+}
+.review-form-name input {
+  border: 1px solid #324d67;
+  border-radius: 4px;
+  height: 24px;
+  padding-left: 6px;
+}
+.review-form-rate {
+  margin-bottom: 8px;
+  color: grey;
+  font-style: light;
+  font-size: 14px;
+}
+.review-form-rate input {
+  margin-right: 16px;
+  border: 1px solid #324d67;
+  border-radius: 4px;
+  height: 24px;
+}
+.review-form-comment {
+  margin-bottom: 8px;
+}
+.review-form-comment textarea {
+  border: 1px solid #324d67;
+  border-radius: 4px;
+  padding-top: 6px;
+  padding-left: 6px;
+}
+.review-form-button {
+  margin-top: -15px;
+}
+
 .maylike-products-wrapper{
   margin-top: 60px;
 }

@@ -147,10 +147,10 @@ const ProductDetails = ({ product, otherProducts }) => {
                 className="add-review App-link"
                 onClick={() => {
                   setModal(
-                    <>
-                      <h3>Your review</h3>
+                    <div className='review-form'>
+                      <h3 className='review-form-title'>Your review</h3>
                       <form method="get" className="" id="ratingsForm">
-                        <div className="">
+                        <div className="review-form-name">
                           <input
                             type="text"
                             name="userName"
@@ -160,11 +160,11 @@ const ProductDetails = ({ product, otherProducts }) => {
                             required
                           />
                         </div>
-                        <div className="stars-form">
+                        <div className="review-form-rate">
                           <input type="number" id="rating" name="rating" min='0' max='5' ref={inputRate} required />
-                          Your rate (0-5)
+                          Rate this product (0-5)
                         </div>
-                        <div className="">
+                        <div className="review-form-comment">
                           <textarea
                             id="newComment"
                             name="newComment"
@@ -175,17 +175,17 @@ const ProductDetails = ({ product, otherProducts }) => {
                             required
                           />
                         </div>
-                        <div className="buttons">
+                        <div className="review-form-button">
                           <button
                             type='submit'
-                            className=''
+                            className='btn review-btn'
                             onClick={addComment}
                           >
                             {addingComment ? 'Posting...' : 'Post'}
                           </button>
                         </div>
                       </form>
-                    </>
+                    </div>
                   )
                 }}
               >
