@@ -543,7 +543,7 @@ a {
 
 .comments-container {
   width: fit-content;
-  max-width: 90%;
+  max-width: 100%;
 }
 .all-comments {
   border: 1px solid whitesmoke;
@@ -598,7 +598,7 @@ a {
 }
 
 .maylike-products-wrapper{
-  margin-top: 120px;
+  margin-top: 60px;
 }
 .maylike-products-wrapper h2{
   text-align: center;
@@ -623,7 +623,7 @@ a {
 .success, .cancel{
   width: 1000px;
   margin: auto;
-  margin-top: 160px;
+  margin-top: 45px;
   background-color: #dcdcdc;
   padding: 50px;
   border-radius: 15px;
@@ -789,7 +789,7 @@ a {
     width: 550%;
   }
   .success-wrapper, .cancel-wrapper{
-    min-height: 69vh;
+    min-height: 57vh;
   }
   .success, .cancel {
     width: 370px;
@@ -805,6 +805,49 @@ a {
   .btn-container{
     width: 300px;
     margin: auto;
+  }
+
+  .comments-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .comments-container {
+    width: fit-content;
+    max-width: 80%;
+  }
+  .comments-container h2 {
+    margin-bottom: 16px;
+  }
+  .all-comments {
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    margin: 10px 0px 10px 4px;
+    padding: 6px;
+    background-color: white;
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+  }
+  .comment-user-rate {
+    /* border: 1px dotted yellow; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  .comment-user {
+    color: #f02d34;
+    font-style: italic;
+  }
+  .comment-rate {
+    color: #f02d34;
+  }
+  .comment-content {
+    margin-top: 6px;
+  }
+  .more-comments {
+    margin-left: 32px;
+    padding-bottom: 80px;
   }
 }
 
@@ -868,55 +911,21 @@ a {
   z-index:1000;
 }
 
-/* .stars-form {
-  font-size: 0;
-  unicode-bidi: bidi-override;
-  direction: rtl;
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: auto;
+  height: 66vh;
 }
-
-.stars-form * {
-  font-size: 1rem;
+.error-title {
+  margin-top: 32px;
+  color: #324d67;
 }
-
-.stars-form > input {
-  display: none;
+.error-content {
+  color: #324d67;
+  margin-top: 24px;
 }
-
-.stars-form > input + label {
-  display: inline-block;
-  overflow: hidden;
-  text-indent: 9999px;
-  width: 1em;
-  white-space: nowrap;
-  cursor: pointer;
+.error-btn {
+  margin-top: 60px;
 }
-
-.stars-form > input + label:before {
-  display: inline-block;
-  text-indent: -9999px;
-  content: "\2605";
-  color: #888;
-}
-
-.stars-form > input:checked ~ label:before, .stars-form > input + label:hover ~label:before, .stars-form > input + label:hover:before {
-  content: "\2605";
-  color: #e52;
-  text-shadow: 0 0 1px #333;
-}
-
-.stars-form > .star-clear + label {
-  text-indent: -9999px;
-  width: .5em;
-  margin-left: -.5em;
-}
-.stars-form > .star-clear + label:before {
-  content: "\2605";
-  color: #888;
-  text-shadow: none;
-}
-
-.stars-form:hover > input + label:hover ~label:before, .stars-form:hover > input + label:hover:before {
-  content: "\2605";
-  color: #e52;
-  text-shadow: 0 0 1px #333;
-} */

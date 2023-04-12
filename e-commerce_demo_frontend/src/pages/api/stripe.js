@@ -15,11 +15,11 @@ export default async function handler(req, res) {
         ],
         line_items: req.body.map((item) => {
           const img = item.image[0].asset._ref;
-          const newImage = img.replace('image-', 'https://cdn.sanity.io/images/vfxfwnaw/production/').replace('-webp', '.webp');
+          const newImage = img.replace('image-', 'https://cdn.sanity.io/images/y99z001w/production/').replace('-webp', '.webp');
 
           return {
             price_data: {
-              currency: 'usd',
+              currency: 'eur',
               product_data: {
                 name: item.name,
                 images: [newImage],
@@ -27,14 +27,14 @@ export default async function handler(req, res) {
               unit_amount: item.price * 100,
             },
             adjustable_quantity: {
-              enabled:true,
+              enabled: true,
               minimum: 1,
             },
             quantity: item.quantity
           }
         }),
         success_url: `${req.headers.origin}/success`,
-        cancel_url: `${req.headers.origin}/canceled`,
+        cancel_url: `${req.headers.origin}/?canceled=true`,
       }
 
       // Create Checkout Sessions from body params.
