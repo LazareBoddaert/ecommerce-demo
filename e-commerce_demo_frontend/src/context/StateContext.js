@@ -13,6 +13,22 @@ export const StateContext = ({ children }) => {
   let foundProduct;
   let productIndex;
 
+  const sortItems = (items) => {
+    items.sort((a, b) => {
+      const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+      const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      // names must be equal
+      return 0;
+    });
+    return items;
+  }
+
   const onAdd = (product, quantity) => {
     const checkProductInCart = cartItems.find((item) => item._id === product._id);
 
@@ -20,18 +36,19 @@ export const StateContext = ({ children }) => {
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
     if(checkProductInCart) {
 
-      const updatedCartItems = cartItems.map((cartProduct) => {
+      let updatedCartItems = cartItems.map((cartProduct) => {
         if(cartProduct._id === product._id) return {
           ...cartProduct,
           quantity: cartProduct.quantity + quantity
         }
       })
-
+      updatedCartItems = sortItems(updatedCartItems);
       setCartItems(updatedCartItems);
     } else {
       product.quantity = quantity;
-
-      setCartItems([...cartItems, { ...product }]);
+      const newCartItems = [...cartItems, { ...product }];
+      const sortedItems = sortItems(newCartItems);
+      setCartItems(sortedItems);
     }
     toast.success(`${qty} ${product.name} added to the cart.`);
   }
@@ -48,14 +65,18 @@ export const StateContext = ({ children }) => {
   const toggleCartItemQuantity = (id, value) => {
     foundProduct = cartItems.find((item) => item._id === id);
     productIndex = cartItems.findIndex((product) => product._id === id);
-    const newCartItems = cartItems.filter((item) => item._id !== id);
+    let newCartItems = cartItems.filter((item) => item._id !== id);
 
     if (value === 'inc') {
-      setCartItems([...newCartItems, {...foundProduct, quantity: foundProduct.quantity + 1 }]);
+      newCartItems = [...newCartItems, {...foundProduct, quantity: foundProduct.quantity + 1 }];
+      newCartItems = sortItems(newCartItems);
+      setCartItems(newCartItems);
       setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
       setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
     } else if (value === 'dec' && foundProduct.quantity > 1) {
-      setCartItems([...newCartItems, {...foundProduct, quantity: foundProduct.quantity - 1 }]);
+      newCartItems = [...newCartItems, {...foundProduct, quantity: foundProduct.quantity - 1 }];
+      newCartItems = sortItems(newCartItems);
+      setCartItems(newCartItems);
       setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
       setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
     }
